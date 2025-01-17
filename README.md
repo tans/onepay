@@ -1,48 +1,65 @@
-# Astro Starter Kit: Basics
+# 欢迎使用 OnePay收银台
 
-```sh
-npm create astro@latest -- --template basics
+让不同产品使用统一的支付后台
+
+
+### 快速部署
+
+- 一键部署，免开发，支持 Vercel。
+
+### 多种支付方式
+
+- 集成微信支付，支付宝，加密货币等。
+
+## 主要功能
+
+- 每次开发新产品，都需要重新开发支付后台，成本高，维护难。
+- 通过 OnePay，可以轻松集成多种支付方式，让不同产品使用统一的支付后台。
+- 免去重复的开发，避免密钥泄露风险，统一管理支付渠道。
+
+## 使用步骤
+
+### 步骤 1: 部署 OnePay
+
+- 部署到 Vercel
+- 配置环境变量
+
+```
+# 主机
+HOST=https://域名
+
+# 微信支付
+WEPAY_APPID=公众号appid
+WEPAY_MCHID=商户号
+WEPAY_SECRET=商户密钥
+
+# 数据库
+MONGODB_URI=mongodb://用户名:密码@主机:端口/数据库名?authSource=数据库名
+MONGO_DB=数据库名
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+### 步骤 2: 创建支付订单
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- 跳转到 `HOST/api/create-order`
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+#### 参数:
 
-## 🚀 Project Structure
+- `fee`: 单位为分，100 表示 1元
+- `redirectUrl`: 支付完成后跳转的地址
 
-Inside of your Astro project, you'll see the following folders and files:
+### 步骤 3: 获取支付结果
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- 回调: 创建订单时传入的回调地址参数 `notifyUrl`
+- 轮询: 根据订单号查询支付结果
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## API 文档
 
-## 🧞 Commands
+### 创建订单 `/api/create-order`
 
-All commands are run from the root of the project, from a terminal:
+- `fee`: 单位为分，100 表示 1元
+- `redirectUrl`: 支付完成后跳转的地址
+- `notifyUrl`: 支付结果回调地址
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### 查询订单 `/api/query-order`
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `outTradeNo`: 订单号
