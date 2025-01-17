@@ -47,7 +47,7 @@ if (order) {
         <h1 class="font-mono font-bold p-4">微信扫码支付</h1>
         <input type="hidden" id="id" value={id} />
         <div class="p-4 flex justify-center items-center">
-            {result && <QRCodeSVG value={result.code_url.value} size={200} />}
+            {result && <QRCodeSVG value={result.code_url} size={200} />}
         </div>
     </div>
 </Layout>
