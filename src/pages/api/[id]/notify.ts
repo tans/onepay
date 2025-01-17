@@ -6,8 +6,8 @@ export const prerender = false
 export const POST: APIRoute = async ({ request }) => {
     const { id } = request.params
     const body = await request.text()
-    const result = helper.fromXML(body)
-    console.log(result)
+    let result = helper.fromXML(body)
+    result = result.xml || result
     const order = await db.onepay.findOne({ outTradeNo: result.out_trade_no })
 
     if (!order) {
