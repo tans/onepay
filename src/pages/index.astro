@@ -87,7 +87,30 @@ import Layout from "../layouts/Layout.astro";
 
 	<div class="text-2xl font-bold my-4">API 文档</div>
 	<div class="text-xl">
-		<div class="">创建订单 /api/create-order</div>
-		<div class="">查询订单 /api/query-order</div>
+		<div class="mb-4">
+			<strong>创建订单</strong>
+			<code class="bg-gray-100 px-1 rounded">/api/create-order</code>
+			<ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+				<li>
+					<code class="bg-gray-100 px-1 rounded">fee</code> 单位为分，100
+					表示 1元
+				</li>
+				<li>
+					<code class="bg-gray-100 px-1 rounded">redirectUrl</code> 支付完成后跳转的地址
+				</li>
+				<li>
+					<code class="bg-gray-100 px-1 rounded">notifyUrl</code> 支付结果回调地址
+				</li>
+			</ul>
+		</div>
+		<div>
+			<strong>查询订单</strong>
+			<code class="bg-gray-100 px-1 rounded">/api/query-order</code>
+			<ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+				<li>
+					<code class="bg-gray-100 px-1 rounded">outTradeNo</code> 订单号
+				</li>
+			</ul>
+		</div>
 	</div>
 </Layout>
