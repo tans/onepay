@@ -40,11 +40,16 @@ const exp: Exp = {
 
     fromXML: function (str: string): any {
         let result = xml2js(str, { compact: true, cdataKey: 'value' });
-        for (let key in result) {
-            if (result[key].value) {
-                result[key] = result[key].value;
+        function loopChildren(obj: any) {
+            for (let key in obj) {
+                if (obj[key].value) {
+                    obj[key] = obj[key].value;
+                } else if (typeof obj[key] === 'object') {
+                    loopChildren(obj[key]);
+                }
             }
         }
+        loopChildren(result);
         return result;
     },
 
