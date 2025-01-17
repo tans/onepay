@@ -2,6 +2,7 @@ import db from "@/lib/db"
 import helper from "@/lib/wepay/helper"
 import type { APIRoute } from "astro"
 
+export const prerender = false
 export const POST: APIRoute = async ({ request }) => {
     const { id } = request.params
     const body = await request.text()
