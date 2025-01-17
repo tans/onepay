@@ -1,11 +1,11 @@
 import db from "@/lib/db"
-import { fromXML } from "@/lib/wepay/helper"
+import helper from "@/lib/wepay/helper"
 import type { APIRoute } from "astro"
 
 export const POST: APIRoute = async ({ request }) => {
     const { id } = request.params
     const body = await request.text()
-    const result = fromXML(body)
+    const result = helper.fromXML(body)
     console.log(result)
     const order = await db.onepay.findOne({ outTradeNo: result.out_trade_no })
 
