@@ -1,5 +1,7 @@
 import { createHash } from 'crypto'
-import { js2xml, xml2js } from 'xml-js'
+import xmljs from 'xml-js'
+
+let { js2xml, xml2js } = xmljs
 
 let exp = {}
 exp.nonceStr = function (length) {
