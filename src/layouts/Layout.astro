@@ -1,4 +1,7 @@
-<!doctype html>
+---
+import "@/styles/globals.css";
+---
+
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -6,16 +9,20 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>OnePay收银台</title>
+		<link rel="stylesheet" href="/styles/globals.css" />
 	</head>
 	<body>
 		<div class="max-w-screen-sm mx-auto">
 			<slot />
 			<div class="mt-8 text-sm text-center">
-				开源地址：<a
+				开源地址：
+				<a
 					href="https://github.com/tans/onepay"
 					class="text-blue-500 hover:text-blue-700"
-					target="_blank">OnePay</a
+					target="_blank"
 				>
+					OnePay
+				</a>
 			</div>
 			<div class="mt-8 text-sm text-center">
 				OnePay收银台 - 开源在线支付集成解决方案

@@ -1,10 +1,93 @@
 ---
+import { Button } from "@/components/ui/button";
 import Layout from "../layouts/Layout.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<h1>Hello World</h1>
+	<section class="text-center py-12">
+		<h1 class="text-5xl font-extrabold mb-6 text-blue-600">
+			欢迎使用 OnePay收银台
+		</h1>
+		<p class="text-xl text-gray-700 mb-10">让不同产品使用统一的支付后台</p>
+		<div class="flex justify-center space-x-4 mb-8">
+			<a
+				href="https://github.com/tans/onepay"
+				class="text-blue-500 hover:text-blue-700 underline"
+				target="_blank"
+			>
+				<Button> Github </Button>
+			</a>
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+			<div class="p-6 border rounded-lg shadow-md">
+				<h2 class="text-xl font-semibold mb-2">快速部署</h2>
+				<p class="text-gray-700">一键部署，免开发，支持 Vercel.</p>
+			</div>
+			<div class="p-6 border rounded-lg shadow-md">
+				<h2 class="text-xl font-semibold mb-2">多种支付方式</h2>
+				<p class="text-gray-700">集成微信支付，支付宝，加密货币等</p>
+			</div>
+		</div>
+	</section>
+	<div class="leading-8">
+		<div class="text-xl font-bold">主要功能</div>
+		每次开发新产品，都需要重新开发支付后台，成本高，维护难。
+		<br />
+		通过
+		<a
+			href="/pay/123456"
+			class="text-blue-500 hover:text-blue-700 underline">onepay</a
+		>，可以轻松集成多种支付方式，让不同产品使用统一的支付后台。
+		<br />
+		<div>免去重复的开发， 避免密钥泄露风险， 统一管理支付渠道。</div>
+	</div>
+
+	<div class="text-2xl font-bold my-4">使用步骤</div>
+	<div class="space-y-6">
+		<div class="p-4 border-l-4 border-blue-500 bg-blue-50 rounded">
+			<strong class="block text-lg">步骤 1: 部署 OnePay</strong>
+			<ul class="list-decimal list-inside ml-6 mt-2 space-y-1">
+				<li>部署到 Vercel</li>
+				<li>配置环境变量</li>
+			</ul>
+		</div>
+		<div class="p-4 border-l-4 border-green-500 bg-green-50 rounded">
+			<strong class="block text-lg">步骤 2: 创建支付订单</strong>
+			<div class="mt-2">
+				<p>
+					跳转到 <code class="bg-gray-100 px-1 rounded"
+						>HOST/api/create-order</code
+					>
+				</p>
+				<div class="mt-2">
+					<strong>参数:</strong>
+					<ul class="list-disc list-inside ml-6 space-y-1">
+						<li>
+							<code class="bg-gray-100 px-1 rounded">fee</code> 单位为分，100
+							表示 1元
+						</li>
+						<li>
+							<code class="bg-gray-100 px-1 rounded"
+								>redirectUrl</code
+							> 支付完成后跳转的地址
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="p-4 border-l-4 border-yellow-500 bg-yellow-50 rounded">
+			<strong class="block text-lg">步骤 3: 获取支付结果</strong>
+			<ul class="list-decimal list-inside ml-6 mt-2 space-y-1">
+				<li>回调 创建订单时候， 传入的回调地址参数 notifyUrl</li>
+				<li>轮询 根据订单号查询支付结果</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="text-2xl font-bold my-4">API 文档</div>
+	<div class="text-xl">
+		<div class="">创建订单 /api/create-order</div>
+		<div class="">查询订单 /api/query-order</div>
+	</div>
 </Layout>
