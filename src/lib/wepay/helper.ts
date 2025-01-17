@@ -39,7 +39,13 @@ const exp: Exp = {
     },
 
     fromXML: function (str: string): any {
-        return xml2js(str, { compact: true, cdataKey: 'value' });
+        let result = xml2js(str, { compact: true, cdataKey: 'value' });
+        for (let key in result) {
+            if (result[key].value) {
+                result[key] = result[key].value;
+            }
+        }
+        return result;
     },
 
     checkFields: function (obj: any, requireFields: string[]): string[] {
