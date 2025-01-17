@@ -1,4 +1,4 @@
-import { db } from "@/lib/db"
+import db from "@/lib/db"
 import { fromXML } from "xml-js"
 import type { APIRoute } from "astro"
 

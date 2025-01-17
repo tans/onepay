@@ -31,7 +31,7 @@ if (order) {
         out_trade_no: order.outTradeNo,
         total_fee: order.fee,
         spbill_create_ip: "127.0.0.1",
-        notify_url: `${process.env.HOST}/api/notify`,
+        notify_url: `${process.env.HOST}/api/${order._id}/notify`,
         // redirect_url: order.redirectUrl || "",
     };
 
