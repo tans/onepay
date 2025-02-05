@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import AlipayIcon from "../icons/alipay";
 import WePayIcon from "../icons/wepay";
+import { Loader2 } from "lucide-react";
 
 export default function Pay() {
     const [id, setId] = useState(null);
@@ -13,6 +14,7 @@ export default function Pay() {
     const [isMobile, setIsMobile] = useState(false);
     const [payWay, setPayWay] = useState("alipay-pc");
     const [html, setHtml] = useState("");
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const _id = new URLSearchParams(window.location.search).get("id");
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -25,7 +27,7 @@ export default function Pay() {
             setId(_id);
             fetch("/api/query-order?id=" + _id).then((res) => res.json()).then((data) => {
                 setOrder(data.order);
-                console.log(data);
+                setLoading(false);
             });
         }
     }, []);
@@ -43,15 +45,23 @@ export default function Pay() {
                 location.href = `/api/${id}/alipay-wap`;
             }
             if (payWay == 'wechat-mobile') {
-                location.href = `/api/${id}`;
+                location.href = `/pay/${id}`;
             }
         } catch (error) {
             console.error(error);
         }
     }
 
+    if (loading) {
+        return <div className="max-w-sm mx-auto m-8 p-4 shadow-md rounded-md border border-gray-200">
+            <div className="flex justify-center items-center h-full">
+                <Loader2 className="w-8 h-8 text-gray-500 animate-spin" />
+            </div>
+        </div>
+    }
     return <div className="max-w-sm mx-auto m-8 p-4 shadow-md rounded-md border border-gray-200">
         <h1 className="text-2xl font-bold text-center">收银台</h1>
+
         <h2 className="text-xl font-black text-red-800 p-4 text-center">{order?.fee / 100}元</h2>
         {isMobile && <>
             <RadioGroup onValueChange={(value) => setPayWay(value)} value={payWay}>
