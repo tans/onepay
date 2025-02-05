@@ -42,6 +42,9 @@ export default function Pay() {
             if (payWay == 'alipay-mobile') {
                 location.href = `/api/${id}/alipay-wap`;
             }
+            if (payWay == 'wechat-mobile') {
+                location.href = `/api/${id}`;
+            }
         } catch (error) {
             console.error(error);
         }
@@ -57,6 +60,13 @@ export default function Pay() {
                     <Label htmlFor="alipay-mobile" className="flex items-center space-x-2">
                         <AlipayIcon className="w-6 h-6" />
                         <div>支付宝</div>
+                    </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <RadioGroupItem id="wechat-mobile" value="wechat-mobile"></RadioGroupItem>
+                    <Label htmlFor="wechat-mobile" className="flex items-center space-x-2">
+                        <WePayIcon className="w-6 h-6" />
+                        <div>微信</div>
                     </Label>
                 </div>
             </RadioGroup>
