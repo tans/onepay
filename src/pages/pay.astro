@@ -1,0 +1,8 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PayComponent from "@/components/pay/Pay.tsx";
+---
+
+<Layout>
+    <PayComponent client:only="react" />
+</Layout>
