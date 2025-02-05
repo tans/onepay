@@ -8,6 +8,7 @@ let wepay = new Wepay(
     process.env.WEPAY_SECRET,
 );
 
+export const prerender = false;
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
     const order = await db.onepay.findOne({ _id: new ObjectId(params.id) });
     if (!order) {
