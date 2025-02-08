@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import AlipayIcon from "../icons/alipay";
 import WePayIcon from "../icons/wepay";
 import { Loader2 } from "lucide-react";
+import { Input } from "../ui/input";
 
 export default function Pay() {
     const [id, setId] = useState(null);
@@ -15,8 +16,12 @@ export default function Pay() {
     const [payWay, setPayWay] = useState("alipay-pc");
     const [html, setHtml] = useState("");
     const [loading, setLoading] = useState(true);
+    const [fields, setFields] = useState([]);
+    const [email, setEmail] = useState("");
     useEffect(() => {
         const _id = new URLSearchParams(window.location.search).get("id");
+
+
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         setIsMobile(isMobile);
         if (isMobile) {
@@ -27,16 +32,31 @@ export default function Pay() {
             setId(_id);
             fetch("/api/query-order?id=" + _id).then((res) => res.json()).then((data) => {
                 setOrder(data.order);
+                if (data.order.email) {
+                    setEmail(data.order.email);
+                }
                 setLoading(false);
             });
         }
     }, []);
 
     const handlePay = async () => {
+        if (order?.fields && order.fields.includes('email') && !email) {
+            alert("请输入邮箱");
+            return;
+        }
+
+        await fetch('/api/update-order', {
+            method: 'POST',
+            body: JSON.stringify({
+                id: order._id,
+                email
+            })
+        })
+        return;
         try {
             if (payWay === "alipay-pc") {
                 location.href = `/api/${id}/alipay-pc`;
-
             }
             if (payWay == 'wechat-pc') {
                 location.href = `/pay/${id}`;
@@ -61,8 +81,13 @@ export default function Pay() {
     }
     return <div className="max-w-sm mx-auto m-8 p-4 shadow-md rounded-md border border-gray-200">
         <h1 className="text-2xl font-bold text-center">收银台</h1>
-
         <h2 className="text-xl font-black text-red-800 p-4 text-center">{order?.fee / 100}元</h2>
+
+        {order?.fields && order.fields.includes('email') && <div className="py-4">
+            <Label htmlFor="email">邮箱</Label>
+            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="请输入邮箱" />
+        </div>}
+
         {isMobile && <>
             <RadioGroup onValueChange={(value) => setPayWay(value)} value={payWay}>
                 <div className="flex items-center space-x-2">

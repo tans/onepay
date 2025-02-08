@@ -33,7 +33,7 @@ export const GET = async ({ params }) => {
             body: order.body || '-',
             product_code: 'FAST_INSTANT_TRADE_PAY',
         },
-        notifyUrl: 'https://onepay.com/api/notify',
+        notifyUrl: 'https://onepay.com/api/' + id + '/alipay-notify',
         returnUrl: order.redirectUrl || "",
     })
 

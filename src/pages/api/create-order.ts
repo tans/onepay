@@ -29,7 +29,7 @@ export const GET: APIRoute = async ({ request }) => {
     let fields = searchParams.get("fields") || "";
     if (fields) {
         fields = decodeURIComponent(fields);
-        fields = JSON.parse(fields);
+        fields = fields.split("|");
     }
 
     const redirectUrl = searchParams.get("redirectUrl") || "";
