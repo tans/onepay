@@ -53,7 +53,6 @@ export default function Pay() {
                 email
             })
         })
-        return;
         try {
             if (payWay === "alipay-pc") {
                 location.href = `/api/${id}/alipay-pc`;
