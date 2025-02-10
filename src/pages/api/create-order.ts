@@ -2,7 +2,7 @@ import db from "@/lib/db"
 import type { APIRoute } from "astro"
 
 export const prerender = false;
-let createOrder = async ({ fee, outTradeNo, redirectUrl, fields }: { fee: number, outTradeNo: string, redirectUrl: string, fields: any }) => {
+let createOrder = async ({ fee, outTradeNo, redirectUrl, fields, title }: { fee: number, outTradeNo: string, redirectUrl: string, fields: any, title: string }) => {
     let order = await db.onepay.findOne({
         outTradeNo
     })
@@ -15,6 +15,7 @@ let createOrder = async ({ fee, outTradeNo, redirectUrl, fields }: { fee: number
         outTradeNo,
         redirectUrl,
         fields,
+        title,
         createdAt: new Date()
     })
     order = await db.onepay.findOne({ _id: insertedId })
@@ -42,10 +43,10 @@ export const GET: APIRoute = async ({ request }) => {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-    let { fee, outTradeNo, redirectUrl, fields } = await request.json()
+    let { fee, outTradeNo, redirectUrl, fields, title } = await request.json()
     outTradeNo = outTradeNo || Date.now().toString();
 
-    const order = await createOrder({ fee, outTradeNo, redirectUrl, fields })
+    const order = await createOrder({ fee, outTradeNo, redirectUrl, fields, title })
     const paymentUrl = `${process.env.HOST}/pay?id=${order._id}`
 
     return Response.json({ paymentUrl, order })

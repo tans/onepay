@@ -2,11 +2,12 @@ import type { APIRoute } from "astro"
 import db from "@/lib/db"
 import { ObjectId } from "mongodb"
 export const prerender = false;
-export const POST: APIRoute = async ({ request }) => {
-    const body = await request.json()
-    console.log(body)
+export const GET: APIRoute = async ({ request }) => {
+    const url = new URL(request.url)
+    const params = url.searchParams
+    console.log(params)
 
-    let order = await db.onepay.findOne({ _id: ObjectId(body.out_trade_no) })
+    let order = await db.onepay.findOne({ _id: new ObjectId(params.get('out_trade_no')) })
     if (!order) {
         return Response.json({ success: false, message: "订单不存在" })
     }

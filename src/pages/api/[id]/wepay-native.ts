@@ -19,7 +19,7 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     let result;
     let options = {
         trade_type: "NATIVE",
-        body: "onepay 支付",
+        body: order.title || "onepay 支付",
         product_id: order.outTradeNo,
         out_trade_no: order.outTradeNo,
         total_fee: order.fee,

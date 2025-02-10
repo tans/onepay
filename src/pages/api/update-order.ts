@@ -14,7 +14,6 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     let updateFields = _.pick(body, order.fields)
-    console.log(updateFields)
     await db.onepay.updateOne({ _id: id }, { $set: updateFields })
     return Response.json({ success: true })
 }

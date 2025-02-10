@@ -18,6 +18,7 @@ export default function Pay() {
     const [loading, setLoading] = useState(true);
     const [fields, setFields] = useState([]);
     const [email, setEmail] = useState("");
+    const [ship, setShip] = useState({});
     useEffect(() => {
         const _id = new URLSearchParams(window.location.search).get("id");
 
@@ -35,6 +36,9 @@ export default function Pay() {
                 if (data.order.email) {
                     setEmail(data.order.email);
                 }
+                if (data.order.ship) {
+                    setShip(data.order.ship);
+                }
                 setLoading(false);
             });
         }
@@ -45,14 +49,21 @@ export default function Pay() {
             alert("请输入邮箱");
             return;
         }
+        if (order?.fields && order.fields.includes('ship') && !ship) {
+            alert("请填写收货地址");
+            return;
+        }
 
-        await fetch('/api/update-order', {
-            method: 'POST',
-            body: JSON.stringify({
-                id: order._id,
-                email
+        if (order?.fields) {
+            await fetch('/api/update-order', {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: order._id,
+                    email,
+                    ship
+                })
             })
-        })
+        }
         try {
             if (payWay === "alipay-pc") {
                 location.href = `/api/${id}/alipay-pc`;
@@ -86,7 +97,14 @@ export default function Pay() {
             <Label htmlFor="email">邮箱</Label>
             <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="请输入邮箱" />
         </div>}
-
+        {order?.fields && order.fields.includes('ship') && <div className="py-4">
+            <Label htmlFor="ship">收货地址</Label>
+            <Input id="ship" value={ship.address} onChange={(e) => setShip({ ...ship, address: e.target.value })} placeholder="请输入收货地址" />
+            <Label htmlFor="ship-name">收货人</Label>
+            <Input id="ship-name" value={ship.name} onChange={(e) => setShip({ ...ship, name: e.target.value })} placeholder="请输入收货人" />
+            <Label htmlFor="ship-phone">联系电话</Label>
+            <Input id="ship-phone" value={ship.phone} onChange={(e) => setShip({ ...ship, phone: e.target.value })} placeholder="请输入联系电话" />
+        </div>}
         {isMobile && <>
             <RadioGroup onValueChange={(value) => setPayWay(value)} value={payWay}>
                 <div className="flex items-center space-x-2">
