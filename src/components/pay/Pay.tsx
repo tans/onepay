@@ -90,7 +90,7 @@ export default function Pay() {
         </div>
     }
     return <div className="max-w-sm mx-auto m-8 p-4 shadow-md rounded-md border border-gray-200">
-        <h1 className="text-2xl font-bold text-center">收银台</h1>
+        <h1 className="text-2xl font-bold text-center">{order?.title || "收银台"}</h1>
         <h2 className="text-xl font-black text-red-800 p-4 text-center">{order?.fee / 100}元</h2>
 
         {order?.fields && order.fields.includes('email') && <div className="py-4">
