@@ -15,5 +15,8 @@ export default defineConfig({
       applyBaseStyles: false
     })
   ],
-  adapter: vercel()
+  adapter: vercel(),
+  security: {
+    checkOrigin: false
+  }
 });
