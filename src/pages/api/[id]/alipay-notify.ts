@@ -22,11 +22,10 @@ export const GET: APIRoute = async ({ request }) => {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-    const formData = await request.formData()
-    const params = Object.fromEntries(formData)
-    console.log(params)
+    const body = await request.json()
+    console.log(body)
 
-    let order = await db.onepay.findOne({ _id: new ObjectId(params.out_trade_no) })
+    let order = await db.onepay.findOne({ _id: new ObjectId(body.out_trade_no) })
     if (!order) {
         return Response.json({ success: false, message: "订单不存在" })
     }
