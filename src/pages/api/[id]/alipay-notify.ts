@@ -2,31 +2,14 @@ import type { APIRoute } from "astro"
 import db from "@/lib/db"
 import { ObjectId } from "mongodb"
 export const prerender = false;
-export const GET: APIRoute = async ({ request }) => {
-    const url = new URL(request.url)
-    const params = url.searchParams
-    console.log(params)
 
-    let order = await db.onepay.findOne({ _id: new ObjectId(params.get('out_trade_no')) })
-    if (!order) {
-        return Response.json({ success: false, message: "订单不存在" })
-    }
 
-    if (order.status === 'paid') {
-        return Response.json({ success: false, message: "订单已支付" })
-    }
+export const POST: APIRoute = async ({ request, params }) => {
+    const formData = await request.formData()
+    const form = Object.fromEntries(formData)
+    console.log(form)
 
-    await db.onepay.updateOne({ _id: order._id }, { $set: { status: 'paid' } })
-
-    return Response.json({ success: true })
-}
-
-export const POST: APIRoute = async ({ request }) => {
-    console.log("alipay-notify");
-    const body = await request.json()
-    console.log(body)
-
-    let order = await db.onepay.findOne({ _id: new ObjectId(body.out_trade_no) })
+    let order = await db.onepay.findOne({ _id: new ObjectId(params.id) })
     if (!order) {
         return Response.json({ success: false, message: "订单不存在" })
     }
