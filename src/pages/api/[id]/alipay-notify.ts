@@ -22,6 +22,7 @@ export const GET: APIRoute = async ({ request }) => {
 }
 
 export const POST: APIRoute = async ({ request }) => {
+    console.log("alipay-notify");
     const body = await request.json()
     console.log(body)
 
