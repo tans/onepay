@@ -7,7 +7,7 @@ export const OPTIONS = async (req: Request) => {
     const response = new Response();
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.headers.set('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
     return response;
 }
 
