@@ -15,7 +15,7 @@ export const GET = async (req: Request) => {
     const query = id ? { _id: new ObjectId(id) } : outTradeNo ? { out_trade_no: outTradeNo } : { email };
     query.status = 'paid'
 
-    const orders = await db.onepay.find(query).toArray();
+    const orders = await db.onepay.find(query, { sort: { _id: -1 } }).toArray();
 
     if (orders.length === 0) {
         return Response.json({ status: false, code: 404, message: "订单不存在" });
