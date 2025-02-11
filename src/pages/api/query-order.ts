@@ -2,15 +2,16 @@ import db from "@/lib/db";
 import { ObjectId } from "mongodb";
 
 export const prerender = false;
-export const GET = async (req: Request) => {
+
+export const OPTIONS = async (req: Request) => {
     const response = new Response();
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+    return response;
+}
 
-    if (req.method === 'OPTIONS') {
-        return response;
-    }
+export const GET = async (req: Request) => {
 
     const id = new URL(req.url).searchParams.get("id");
     const outTradeNo = new URL(req.url).searchParams.get("out_trade_no");
