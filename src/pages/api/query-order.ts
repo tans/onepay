@@ -31,22 +31,11 @@ export const GET = async (req: Request) => {
     }
 
     const query: any = id ? { _id: new ObjectId(id) } : outTradeNo ? { out_trade_no: outTradeNo } : { email };
-    query.status = 'paid';
+    if (!id) {
+        query.status = 'paid';
+    }
 
     const orders = await db.onepay.find(query, { sort: { _id: -1 } }).toArray();
-
-    if (orders.length === 0) {
-        return new Response(JSON.stringify({
-            status: false,
-            code: 404,
-            message: "订单不存在"
-        }), {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json'
-            }
-        });
-    }
 
     return new Response(JSON.stringify({
         status: true,
