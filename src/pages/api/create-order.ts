@@ -37,7 +37,8 @@ export const GET: APIRoute = async ({ request }) => {
     const redirectUrl = searchParams.get("redirectUrl") || "";
     const outTradeNo = searchParams.get("outTradeNo") || Date.now().toString();
     const email = searchParams.get("email") || "";
-    const order = await createOrder({ fee: Number(fee), outTradeNo, redirectUrl, fields, email });
+    const title = searchParams.get("title") || "";
+    const order = await createOrder({ fee: Number(fee), outTradeNo, redirectUrl, fields, email, title });
 
     const paymentUrl = `${process.env.HOST}/pay?id=${order._id}`
     return Response.redirect(paymentUrl)
