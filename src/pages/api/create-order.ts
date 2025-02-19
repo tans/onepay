@@ -15,8 +15,8 @@ let createOrder = async ({ fee, outTradeNo, redirectUrl, fields, title, email }:
         outTradeNo,
         redirectUrl,
         fields,
-        title,
-        email,
+        title: title.replaceAll('null', ''),
+        email: email.replaceAll('null', ''),
         createdAt: new Date()
     })
     order = await db.onepay.findOne({ _id: insertedId })
@@ -48,7 +48,7 @@ export const POST: APIRoute = async ({ request }) => {
     let { fee, outTradeNo, redirectUrl, fields, title, email } = await request.json()
     outTradeNo = outTradeNo || Date.now().toString();
 
-    const order = await createOrder({ fee, outTradeNo, redirectUrl, fields, title, email })
+    const order = await createOrder({ fee, outTradeNo, redirectUrl, fields, title: title || "", email: email || "" })
     const paymentUrl = `${process.env.HOST}/pay?id=${order._id}`
 
     return Response.json({ paymentUrl, order })
